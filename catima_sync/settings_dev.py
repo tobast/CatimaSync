@@ -3,7 +3,7 @@ from pathlib import Path
 
 SECRET_KEY = "django-insecure-uhmd7d6$mr3ey0a"  # FIXME change this
 DEBUG = True  # FIXME change this for production
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS: list[str] = []
 
 
 # Database

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+SUBMODULES="catima_sync backend"
+
+# Run mypy
+if ! venv/bin/mypy $SUBMODULES ; then
+    >&2 echo "FAILED: mypy detected typing errors"
+    exit 1
+fi
