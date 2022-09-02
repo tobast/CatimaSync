@@ -1,9 +1,14 @@
 from django.db import models
 from django.core import validators
+from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext as _
 from uuid import uuid4 as mk_uuid4
 
 from .util import RGBColor
+
+
+class User(AbstractUser):
+    """User model for this project"""
 
 
 class BarcodeFormat(models.TextChoices):
