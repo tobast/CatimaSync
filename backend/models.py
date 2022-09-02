@@ -69,6 +69,10 @@ class LoyaltyCard(models.Model):
         _("Revision ID"), default=0, editable=False
     )
 
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="loyalty_cards"
+    )
+
     def __str__(self) -> str:
         return f"<LoyaltyCard {self.store}>"
 
@@ -104,3 +108,7 @@ class LoyaltyCardGroup(models.Model):
     order = models.PositiveIntegerField(_("Order ID"))
 
     cards = models.ManyToManyField(LoyaltyCard, related_name="groups")
+
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="loyalty_card_groups"
+    )
