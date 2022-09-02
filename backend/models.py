@@ -89,3 +89,13 @@ class LoyaltyCard(models.Model):
     @header_color.setter
     def header_color(self, color: RGBColor):
         self.header_color_raw = color.to_uint24()
+
+
+class LoyaltyCardGroup(models.Model):
+    """A group of loyalty cards"""
+
+    uuid = models.UUIDField(primary_key=True, default=mk_uuid4, editable=False)
+    name = models.CharField(_("Group name"), max_length=512)
+    order = models.PositiveIntegerField(_("Order ID"))
+
+    cards = models.ManyToManyField(LoyaltyCard, related_name="groups")
