@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SUBMODULES="catima_sync backend"
+SUBMODULES="catima_sync backend api"
 
 # Run mypy
 if ! venv/bin/mypy $SUBMODULES ; then
