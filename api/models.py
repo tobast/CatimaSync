@@ -59,12 +59,13 @@ class AuthToken(models.Model):
         cls,
         for_user: User,
         for_device: str,
-        token_name: t.Optional[str],
-        token_secret: t.Optional[str],
-    ) -> "AuthToken":
+        token_name: t.Optional[str] = None,
+        token_secret: t.Optional[str] = None,
+    ) -> tuple["AuthToken", str]:
         """Generate a fresh authentication token, using the provided data if any,g
         generating random data otherwise. The returned token isn't saved yet -- the
-        caller must call `.save()` on it."""
+        caller must call `.save()` on it. Returns both the token and the freshly
+        generated secret."""
 
         def randK(size: int) -> str:
             """Generate :size: random characters from the alphabet from CSPRNG"""
@@ -77,10 +78,13 @@ class AuthToken(models.Model):
 
         hashed_secret = hashers.make_password(token_secret)
 
-        return cls(
-            user=for_user,
-            token_name=token_name,
-            token_secret=hashed_secret,
-            device_name=for_device,
-            last_used=None,
+        return (
+            cls(
+                user=for_user,
+                token_name=token_name,
+                token_secret=hashed_secret,
+                device_name=for_device,
+                last_used=None,
+            ),
+            token_secret,
         )
