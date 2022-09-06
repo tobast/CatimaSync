@@ -34,13 +34,16 @@ class LoyaltyCard(models.Model):
 
     uuid = models.UUIDField(primary_key=True, default=mk_uuid4, editable=False)
     store = models.CharField(_("Name"), max_length=512)
-    note = models.TextField(_("Notes"))
-    expiracy = models.DateField(_("Expires on"))
-    balance = models.DecimalField(_("Balance"), max_digits=8, decimal_places=2)
+    note = models.TextField(_("Notes"), blank=True)
+    expiracy = models.DateField(_("Expires on"), blank=True, null=True)
+    balance = models.DecimalField(
+        _("Balance"), max_digits=8, decimal_places=2, blank=True, default=0
+    )
     balance_currency = models.CharField(
         _("Balance currency"),
         max_length=3,
         help_text=_("Currency 3-letter symbol, ISO 4217"),
+        default="EUR",
     )
     card_id = models.TextField(_("Card ID"))  # QR codes can be big.
     barcode_id_raw = models.TextField(
@@ -62,8 +65,8 @@ class LoyaltyCard(models.Model):
     )
     star_status = models.BooleanField(_("Starred"), default=False)
     archive_status = models.BooleanField(_("Archived"), default=False)
-    last_used = models.DateTimeField(_("Last used"))
-    zoom_level = models.PositiveIntegerField(_("Zoom level"))
+    last_used = models.DateTimeField(_("Last used"), blank=True, null=True)
+    zoom_level = models.PositiveIntegerField(_("Zoom level"), default=0)
 
     revision_id = models.PositiveIntegerField(
         _("Revision ID"), default=0, editable=False
