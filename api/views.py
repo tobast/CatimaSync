@@ -50,3 +50,13 @@ class CardGet(LoyaltyCardAuthenticatedMixin, SingleObjectMixin, APIView):
             "revision_id": card.revision_id,
         }
         return JsonResponse(data)
+
+
+class CardNew(TokenAuthMixin, APIView):
+    """Create a new loyalty card"""
+
+    http_method_names = ["post"]
+
+    def post(self, request, *args, **kwargs):
+        """Create the loyalty card from scratch"""
+        card_data = request.POST
